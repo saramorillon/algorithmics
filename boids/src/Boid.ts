@@ -1,29 +1,7 @@
-const settings = {
-  width: 1280,
-  height: 720,
-  nBoids: 200,
-  speed: 5,
-  rotationFactor: 0.5,
-  nearDistance: 10,
-  visibleDistance: 40,
-  avoidFactor: 0.3,
-  centeringFactor: 0.005,
-  matchingFactor: 0.5,
-}
+import { rand } from './math'
+import { settings } from './settings'
 
-const canvas = document.createElement('canvas')
-canvas.width = settings.width
-canvas.height = settings.height
-document.body.appendChild(canvas)
-
-const ctx = canvas.getContext('2d')!
-if (!ctx) throw new Error('Undefined context')
-
-function rand(min: number, max: number) {
-  return Math.random() * (max - min) + min
-}
-
-class Boid {
+export class Boid {
   x: number
   y: number
   vx: number
@@ -40,7 +18,7 @@ class Boid {
     return Math.sqrt(Math.pow(this.x - boid.x, 2) + Math.pow(this.y - boid.y, 2))
   }
 
-  moveAway() {
+  moveAway(boids: Boid[]) {
     let vx = 0
     let vy = 0
     for (const boid of boids) {
@@ -53,7 +31,7 @@ class Boid {
     this.vy += vx * settings.avoidFactor
   }
 
-  moveCloser() {
+  moveCloser(boids: Boid[]) {
     let x = 0
     let y = 0
     let n = 0
@@ -70,7 +48,7 @@ class Boid {
     }
   }
 
-  alignWith() {
+  alignWith(boids: Boid[]) {
     let vx = 0
     let vy = 0
     let n = 0
@@ -104,40 +82,11 @@ class Boid {
     this.y += this.vy
   }
 
-  update() {
-    this.moveCloser()
-    this.moveAway()
-    this.alignWith()
+  update(boids: Boid[]) {
+    this.moveCloser(boids)
+    this.moveAway(boids)
+    this.alignWith(boids)
     this.adaptSpeed()
     this.updatePosition()
   }
 }
-
-const boids: Boid[] = []
-for (let i = 0; i < settings.nBoids; i++) {
-  boids.push(new Boid())
-}
-
-function drawBoid(boid: Boid) {
-  ctx.save()
-  ctx.translate(boid.x, boid.y)
-  ctx.rotate(Math.atan2(boid.vy, boid.vx))
-  ctx.beginPath()
-  ctx.moveTo(0, 0)
-  ctx.lineTo(0 - 10, 0 + 4)
-  ctx.lineTo(0 - 10, 0 - 4)
-  ctx.lineTo(0, 0)
-  ctx.fill()
-  ctx.restore()
-}
-
-function update() {
-  ctx.clearRect(0, 0, settings.width, settings.height)
-  for (const boid of boids) {
-    boid.update()
-    drawBoid(boid)
-  }
-  requestAnimationFrame(update)
-}
-
-update()
