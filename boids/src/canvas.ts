@@ -11,6 +11,7 @@ if (!ctx) throw new Error('Undefined context')
 
 export function drawBoid(boid: Boid) {
   ctx.save()
+  ctx.fillStyle = '#303030'
   ctx.translate(boid.x, boid.y)
   ctx.rotate(Math.atan2(boid.vy, boid.vx))
   ctx.beginPath()
@@ -23,5 +24,8 @@ export function drawBoid(boid: Boid) {
 }
 
 export function clearCanvas() {
-  ctx.clearRect(0, 0, settings.width, settings.height)
+  ctx.save()
+  ctx.fillStyle = '#F1F3F5'
+  ctx.fillRect(0, 0, settings.width, settings.height)
+  ctx.restore()
 }
