@@ -1,0 +1,10 @@
+{
+  "include": ["src", "vite.config.ts"],
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "commonjs",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}
