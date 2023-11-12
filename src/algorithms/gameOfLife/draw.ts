@@ -1,12 +1,5 @@
 import { Settings } from './types'
 
-export function clean(ctx: CanvasRenderingContext2D, settings: Settings) {
-  ctx.save()
-  ctx.fillStyle = '#F1F3F5'
-  ctx.fillRect(0, 0, settings.width, settings.height)
-  ctx.restore()
-}
-
 export function drawCell(ctx: CanvasRenderingContext2D, x: number, y: number, value: boolean, settings: Settings) {
   const rectX = x * settings.size
   const rectY = y * settings.size
