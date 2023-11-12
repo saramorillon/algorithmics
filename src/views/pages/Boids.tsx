@@ -1,5 +1,5 @@
 import { FormEvent, useCallback, useRef } from 'react'
-import { boids } from '../../algorithms/boids'
+import { generateBoids } from '../../algorithms/generateBoids'
 
 export function Boids() {
   const ref = useRef<HTMLCanvasElement>(null)
@@ -8,7 +8,7 @@ export function Boids() {
     e.preventDefault()
     if (ref.current) {
       const settings = Object.fromEntries(new FormData(e.currentTarget))
-      boids(ref.current, {
+      generateBoids(ref.current, {
         nBoids: Number(settings.nBoids.valueOf()),
         speed: Number(settings.speed.valueOf()),
         rotationFactor: Number(settings.rotationFactor.valueOf()),

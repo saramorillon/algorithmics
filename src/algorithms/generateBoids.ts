@@ -82,7 +82,7 @@ function updatePosition(boid1: Boid, settings: Settings) {
 
 let requestId: number | null = null
 
-export function boids(canvas: HTMLCanvasElement, settings: Settings) {
+export function generateBoids(canvas: HTMLCanvasElement, settings: Settings) {
   if (requestId !== null) {
     cancelAnimationFrame(requestId)
   }

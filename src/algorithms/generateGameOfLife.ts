@@ -4,7 +4,7 @@ const width = 64
 const height = 36
 const size = 20
 
-export function gameOfLife(canvas: HTMLCanvasElement) {
+export function generateGameOfLife(canvas: HTMLCanvasElement) {
   if (requestId !== null) {
     clearTimeout(requestId)
   }

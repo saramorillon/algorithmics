@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react'
-import { gameOfLife } from '../../algorithms/game-of-life'
+import { generateGameOfLife } from '../../algorithms/generateGameOfLife'
 
 export function GameOfLife() {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     if (ref.current) {
-      gameOfLife(ref.current)
+      generateGameOfLife(ref.current)
     }
   }, [])
 
