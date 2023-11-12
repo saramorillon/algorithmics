@@ -1,5 +1,6 @@
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
 import { Boids } from './pages/Boids'
+import { CityGenerator } from './pages/CityGenerator'
 import { GameOfLife } from './pages/GameOfLife'
 
 export function App(): JSX.Element | null {
@@ -10,11 +11,13 @@ export function App(): JSX.Element | null {
           <strong>Algorithmics</strong>
           <Link to="/boids">Boids</Link>
           <Link to="/game-of-life">Game of life</Link>
+          <Link to="/city-generator">City generator</Link>
         </nav>
         <main>
           <Routes>
             <Route path="/boids" element={<Boids />} />
             <Route path="/game-of-life" element={<GameOfLife />} />
+            <Route path="/city-generator" element={<CityGenerator />} />
             <Route path="*" element={<Navigate to="/boids" />} />
           </Routes>
         </main>
