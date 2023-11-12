@@ -1,5 +1,6 @@
 import { rand } from '../../utils/math'
 import { adaptSpeed, alignWith, moveAway, moveCloser, updatePosition } from './behaviour'
+import { clean, drawBoid } from './draw'
 import { Boid, Settings } from './types'
 
 let requestId: number | null = null
@@ -20,27 +21,14 @@ export function run(canvas: HTMLCanvasElement, settings: Settings) {
 
   function update() {
     if (ctx) {
-      ctx.save()
-      ctx.fillStyle = '#F1F3F5'
-      ctx.fillRect(0, 0, settings.width, settings.height)
-      ctx.restore()
+      clean(ctx, settings)
       for (const boid of boids) {
         moveCloser(boid, boids, settings)
         moveAway(boid, boids, settings)
         alignWith(boid, boids, settings)
         adaptSpeed(boid, settings)
         updatePosition(boid, settings)
-        ctx.save()
-        ctx.fillStyle = '#303030'
-        ctx.translate(boid.x, boid.y)
-        ctx.rotate(Math.atan2(boid.vy, boid.vx))
-        ctx.beginPath()
-        ctx.moveTo(0, 0)
-        ctx.lineTo(0 - 10, 0 + 4)
-        ctx.lineTo(0 - 10, 0 - 4)
-        ctx.lineTo(0, 0)
-        ctx.fill()
-        ctx.restore()
+        drawBoid(ctx, boid)
       }
       requestId = requestAnimationFrame(update)
     }
