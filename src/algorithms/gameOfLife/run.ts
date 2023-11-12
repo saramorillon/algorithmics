@@ -1,33 +1,31 @@
+import { Settings } from './types'
+
 let requestId: number | null = null
 
-const width = 64
-const height = 36
-const size = 20
-
-export function generateGameOfLife(canvas: HTMLCanvasElement) {
+export function run(canvas: HTMLCanvasElement, settings: Settings) {
   if (requestId !== null) {
     clearTimeout(requestId)
   }
 
-  canvas.width = width * size
-  canvas.height = height * size
+  canvas.width = settings.width * settings.size
+  canvas.height = settings.height * settings.size
   const ctx = canvas.getContext('2d')
 
   const currentCells: boolean[][] = []
   const nextCells: boolean[][] = []
 
-  for (let x = 0; x < width; x++) {
+  for (let x = 0; x < settings.width; x++) {
     currentCells[x] = []
     nextCells[x] = []
-    for (let y = 0; y < height; y++) {
+    for (let y = 0; y < settings.height; y++) {
       currentCells[x][y] = Math.random() > 0.5
       nextCells[x][y] = false
     }
   }
 
   function update() {
-    for (let x = 0; x < width; x++) {
-      for (let y = 0; y < height; y++) {
+    for (let x = 0; x < settings.width; x++) {
+      for (let y = 0; y < settings.height; y++) {
         const neighbours = [
           currentCells[x - 1]?.[y],
           currentCells[x - 1]?.[y - 1],
@@ -53,15 +51,15 @@ export function generateGameOfLife(canvas: HTMLCanvasElement) {
           }
         }
         if (ctx) {
-          const rectX = x * size
-          const rectY = y * size
+          const rectX = x * settings.size
+          const rectY = y * settings.size
           ctx.save()
           ctx.fillStyle = '#F1F3F5'
-          ctx.fillRect(rectX + 1, rectY + 1, width - 2, height - 2)
+          ctx.fillRect(rectX + 1, rectY + 1, settings.width - 2, settings.height - 2)
           if (nextCells[x][y]) {
             ctx.fillStyle = '#303030'
             ctx.beginPath()
-            ctx.arc(rectX + size / 2, rectY + size / 2, size / 2 - 2, 0, Math.PI * 2)
+            ctx.arc(rectX + settings.size / 2, rectY + settings.size / 2, settings.size / 2 - 2, 0, Math.PI * 2)
             ctx.closePath()
             ctx.fill()
           }
@@ -69,8 +67,8 @@ export function generateGameOfLife(canvas: HTMLCanvasElement) {
         }
       }
     }
-    for (let x = 0; x < width; x++) {
-      for (let y = 0; y < height; y++) {
+    for (let x = 0; x < settings.width; x++) {
+      for (let y = 0; y < settings.height; y++) {
         currentCells[x][y] = nextCells[x][y]
         nextCells[x][y] = false
       }

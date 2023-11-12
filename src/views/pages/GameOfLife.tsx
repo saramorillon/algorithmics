@@ -1,12 +1,16 @@
 import { useEffect, useRef } from 'react'
-import { generateGameOfLife } from '../../algorithms/generateGameOfLife'
+import { run } from '../../algorithms/gameOfLife/run'
 
 export function GameOfLife() {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     if (ref.current) {
-      generateGameOfLife(ref.current)
+      run(ref.current, {
+        width: 64,
+        height: 36,
+        size: 20,
+      })
     }
   }, [])
 
