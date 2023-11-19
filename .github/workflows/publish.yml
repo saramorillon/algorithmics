@@ -2,7 +2,7 @@ name: Publish to Github Page
 
 on:
   push:
-    branches: ['${{ github.event.repository.default_branch }}']
+    branches: [master]
   workflow_dispatch:
 
 permissions:
