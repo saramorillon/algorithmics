@@ -19,23 +19,23 @@ export function run(canvas: HTMLCanvasElement, settings: Settings) {
   }
 
   const river = getRiver(settings)
-  for (const point of river) {
-    setCell(cells, point.x, point.y, 'water')
+  for (const [x, y] of river) {
+    setCell(cells, x, y, 'water')
   }
 
   for (let i = 0; i < settings.villages.quantity; i++) {
     const road = getVillage(settings)
-    for (const point of road) {
-      if (getCell(cells, point.x, point.y) === 'grass') {
-        setCell(cells, point.x, point.y, 'house')
+    for (const [x, y] of road) {
+      if (getCell(cells, x, y) === 'grass') {
+        setCell(cells, x, y, 'house')
       }
     }
   }
 
   // for (let i = 0; i < settings.nRoads; i++) {
   //   const road = getRoad(settings)
-  //   for (const point of road) {
-  //     setCell(cells, point.x, point.y, 'road')
+  //   for (const [x, y] of road) {
+  //     setCell(cells, x, y, 'road')
   //   }
   // }
 

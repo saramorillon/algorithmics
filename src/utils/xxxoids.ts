@@ -1,4 +1,4 @@
-import { distance, oneOf, rand, randExc } from './math'
+import { distance, oneOf, rand, randInt } from './math'
 import { isInsideBounds } from './plan'
 
 /**
@@ -15,24 +15,24 @@ import { isInsideBounds } from './plan'
  * @param f Variation factor
  * @returns a serie of points
  */
-export function lineoid(x: number, y: number, d: number, width: number, height: number, f = 10) {
-  const result = [{ x, y }]
+export function lineoid(x: number, y: number, d: number, width: number, height: number, f = 10): [number, number][] {
+  const result: [number, number][] = [[x, y]]
   for (;;) {
     let v = d
-    if (randExc(0, f) === 0) {
+    if (randInt(0, f) === 0) {
       v = (d + oneOf(1, 3)) % 4
     }
     x += v === 1 ? 1 : v === 3 ? -1 : 0
     y += v === 0 ? -1 : v === 2 ? 1 : 0
-    if (result.some((coordinates) => coordinates.x === x && coordinates.y === y)) {
-      x = result[result.length - 1].x
-      y = result[result.length - 1].y
+    if (result.some((coordinates) => coordinates[0] === x && coordinates[1] === y)) {
+      x = result[result.length - 1][0]
+      y = result[result.length - 1][1]
       continue
     }
     if (!isInsideBounds(x, y, width, height)) {
       return result
     }
-    result.push({ x, y })
+    result.push([x, y])
   }
 }
 
@@ -52,11 +52,11 @@ export function lineoid(x: number, y: number, d: number, width: number, height: 
  * @returns a serie of points
  */
 
-export function polyline(x: number, y: number, d: number, width: number, height: number, f = 5) {
+export function polyline(x: number, y: number, d: number, width: number, height: number, f = 5): [number, number][] {
   let v = d
-  const result = [{ x, y }]
+  const result: [number, number][] = [[x, y]]
   for (;;) {
-    if (randExc(0, f) === 0) {
+    if (randInt(0, f) === 0) {
       if (v === d) {
         v = (v + oneOf(1, 3)) % 4
       } else {
@@ -65,20 +65,20 @@ export function polyline(x: number, y: number, d: number, width: number, height:
     }
     x += v === 1 ? 1 : v === 3 ? -1 : 0
     y += v === 0 ? -1 : v === 2 ? 1 : 0
-    if (result.some((coordinates) => coordinates.x === x && coordinates.y === y)) {
-      x = result[result.length - 1].x
-      y = result[result.length - 1].y
+    if (result.some((coordinates) => coordinates[0] === x && coordinates[1] === y)) {
+      x = result[result.length - 1][0]
+      y = result[result.length - 1][1]
       continue
     }
     if (!isInsideBounds(x, y, width, height)) {
       return result
     }
-    result.push({ x, y })
+    result.push([x, y])
   }
 }
 
-export function discoid(ox: number, oy: number, r: number, width: number, height: number, f = 4) {
-  const result = [{ x: ox, y: oy }]
+export function discoid(ox: number, oy: number, r: number, width: number, height: number, f = 4): [number, number][] {
+  const result: [number, number][] = [[ox, oy]]
   const minX = ox + r * Math.cos(Math.PI)
   const maxX = ox + r * Math.cos(0)
   const minY = oy + r * Math.sin(-Math.PI / 2)
@@ -87,8 +87,8 @@ export function discoid(ox: number, oy: number, r: number, width: number, height
   for (let x = minX; x < maxX; x++) {
     for (let y = minY; y < maxY; y++) {
       const v = rand(1.2, 1.7)
-      if (distance(x, y, ox, oy) * v <= r && randExc(0, f) === 0 && isInsideBounds(x, y, width, height)) {
-        result.push({ x, y })
+      if (distance(x, y, ox, oy) * v <= r && randInt(0, f) === 0 && isInsideBounds(x, y, width, height)) {
+        result.push([x, y])
       }
     }
   }
