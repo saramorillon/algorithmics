@@ -1,7 +1,8 @@
 {
-  "name": "simulation-algorithms",
+  "name": "algorithmics",
   "devDependencies": {
     "@saramorillon/eslint-plugin": "^3.0.0",
+    "@types/node": "^20.9.2",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@vitejs/plugin-react": "^4.1.1",
