@@ -23,19 +23,18 @@ export function CityGenerator() {
   return (
     <div className="flex">
       <article className="mr2 mb0">
-        <aside>
-          <form onSubmit={onSubmit}>
-            <label>
-              Number of villages
-              <input type="number" name="nVillages" defaultValue={3} min={0} step={1} />
-            </label>
-            <label>
-              Village size
-              <input type="number" name="villageSize" defaultValue={10} min={0} step={1} />
-            </label>
-            <button data-variant="primary">Run</button>
-          </form>
-        </aside>
+        <em>This algorithm is currently in progress</em>
+        <form onSubmit={onSubmit}>
+          <label>
+            Number of villages
+            <input type="number" name="nVillages" defaultValue={3} min={0} step={1} />
+          </label>
+          <label>
+            Village size
+            <input type="number" name="villageSize" defaultValue={10} min={0} step={1} />
+          </label>
+          <button data-variant="primary">Run</button>
+        </form>
       </article>
       <canvas ref={ref} />
     </div>
