@@ -1,5 +1,6 @@
 {
   "name": "algorithmics",
+  "homepage": "https://saramorillon.github.io/algorithmics/",
   "scripts": {
     "prebuild": "tsc",
     "build": "vite build"

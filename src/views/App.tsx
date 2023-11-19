@@ -7,7 +7,7 @@ import { Pathfinding } from './pages/Pathfinding'
 export function App(): JSX.Element | null {
   return (
     <>
-      <HashRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter>
         <nav aria-label="Main">
           <strong>Algorithmics</strong>
           <Link to="/boids">Boids</Link>
