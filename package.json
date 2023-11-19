@@ -1,6 +1,5 @@
 {
   "name": "simulation-algorithms",
-  "packageManager": "yarn@4.0.1",
   "devDependencies": {
     "@saramorillon/eslint-plugin": "^3.0.0",
     "@types/react": "^18",
