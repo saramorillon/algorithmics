@@ -1,8 +1,8 @@
 import { manathan } from '../../utils/math'
-import { getCell } from '../../utils/plan'
-import { Node } from './types'
+import { copyCell } from '../../utils/plan'
+import { Cell } from './types'
 
-function getLeastF(open: Node[]) {
+function getLeastF(open: Cell[]) {
   let min = 0
   for (let i = 1; i < open.length; i++) {
     if (open[i].f < open[min].f) {
@@ -12,11 +12,11 @@ function getLeastF(open: Node[]) {
   return min
 }
 
-export function getPath(cells: number[][], sx: number, sy: number, dx: number, dy: number) {
-  const open: Node[] = []
-  const closed: Node[] = []
+export function getPath(cells: Cell[][], source: Cell, target: Cell) {
+  const open: Cell[] = []
+  const closed: Cell[] = []
 
-  open.push({ x: sx, y: sy, f: 0, g: 0, h: 0 })
+  open.push(source)
 
   while (open.length > 0) {
     const index = getLeastF(open)
@@ -24,46 +24,49 @@ export function getPath(cells: number[][], sx: number, sy: number, dx: number, d
     closed.push(current)
 
     const successors = [
-      { x: current.x + 1, y: current.y, f: 0, g: 1, h: 0, parent: current },
-      { x: current.x, y: current.y + 1, f: 0, g: 1, h: 0, parent: current },
-      { x: current.x - 1, y: current.y, f: 0, g: 1, h: 0, parent: current },
-      { x: current.x, y: current.y - 1, f: 0, g: 1, h: 0, parent: current },
+      [current.x + 1, current.y],
+      [current.x, current.y + 1],
+      [current.x - 1, current.y],
+      [current.x, current.y - 1],
     ]
 
-    for (const next of successors) {
-      if (next.x === dx && next.y === dy) {
-        // If successor is the destination, return it
-        return next
-      }
+    for (const [x, y] of successors) {
+      // Copy cell to prevent circular references
+      const successor = copyCell(cells, x, y)
 
-      const weight = getCell(cells, next.x, next.y)
-
-      if (weight === undefined) {
+      if (successor === undefined) {
         // Ignore successor which is outside grid bounds
         continue
       }
 
-      if (weight === 0) {
-        // Ignore successor which is a wall
+      successor.parent = current
+
+      if (successor.x === target.x && successor.y === target.y) {
+        // If successor is the destination, return it
+        return successor
+      }
+
+      if (successor.weight === 0) {
+        // Ignore walls
         continue
       }
 
-      if (closed.some((node) => node.x === next.x && node.y === next.y)) {
+      if (closed.some((node) => node.x === successor.x && node.y === successor.y)) {
         // Ignore successor which is already in the closed list
         continue
       }
 
-      next.g += current.g
-      next.h = manathan(next.x, next.y, dx, dy)
-      next.f = next.g + next.h + weight
+      successor.g = current.g + 1
+      successor.h = manathan(successor.x, successor.y, target.x, target.y)
+      successor.f = successor.g + successor.h + successor.weight
 
-      const index = open.findIndex((node) => node.x === next.x && node.y === next.y)
+      const index = open.findIndex((node) => node.x === successor.x && node.y === successor.y)
       if (index === -1) {
         // Add the successor to the open list
-        open.push(next)
-      } else if (open[index].f > next.f) {
-        // Replace better successor in the open list
-        open[index] = next
+        open.push(successor)
+      } else if (open[index].f > successor.f) {
+        // Replace with better successor in the open list
+        open[index] = successor
       }
     }
   }
