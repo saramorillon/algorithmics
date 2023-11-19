@@ -2,7 +2,7 @@ import { getNextState } from './behaviour'
 import { drawCell } from './draw'
 import { Settings } from './types'
 
-let requestId: number | null = null
+let requestId: NodeJS.Timeout | null = null
 
 export function run(canvas: HTMLCanvasElement, settings: Settings) {
   if (requestId !== null) {

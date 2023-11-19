@@ -1,3 +1,4 @@
 .yarn
 .vite
 node_modules
+dist

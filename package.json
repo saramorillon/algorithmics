@@ -1,5 +1,9 @@
 {
   "name": "algorithmics",
+  "scripts": {
+    "prebuild": "tsc",
+    "build": "vite build"
+  },
   "devDependencies": {
     "@saramorillon/eslint-plugin": "^3.0.0",
     "@types/node": "^20.9.2",

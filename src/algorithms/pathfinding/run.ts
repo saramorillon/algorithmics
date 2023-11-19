@@ -4,7 +4,7 @@ import { getPath } from './behaviour'
 import { colors, drawCell } from './draw'
 import { Cell, Settings } from './types'
 
-let requestId: number | null = null
+let requestId: NodeJS.Timeout | null = null
 
 export function run(canvas: HTMLCanvasElement, settings: Settings) {
   if (requestId !== null) {
