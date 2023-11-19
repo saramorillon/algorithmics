@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
+import { HashRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
 import { Boids } from './pages/Boids'
 import { CityGenerator } from './pages/CityGenerator'
 import { GameOfLife } from './pages/GameOfLife'
@@ -7,7 +7,7 @@ import { Pathfinding } from './pages/Pathfinding'
 export function App(): JSX.Element | null {
   return (
     <>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter basename={import.meta.env.BASE_URL}>
         <nav aria-label="Main">
           <strong>Algorithmics</strong>
           <Link to="/boids">Boids</Link>
@@ -24,7 +24,7 @@ export function App(): JSX.Element | null {
             <Route path="*" element={<Navigate to="/boids" />} />
           </Routes>
         </main>
-      </BrowserRouter>
+      </HashRouter>
     </>
   )
 }
