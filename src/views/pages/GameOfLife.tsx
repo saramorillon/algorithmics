@@ -7,9 +7,9 @@ export function GameOfLife() {
   useEffect(() => {
     if (ref.current) {
       run(ref.current, {
-        width: 64,
-        height: 36,
-        size: 20,
+        width: 128,
+        height: 72,
+        size: 10,
       })
     }
   }, [])

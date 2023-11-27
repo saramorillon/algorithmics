@@ -2,11 +2,11 @@ import { getNextState } from './behaviour'
 import { drawCell } from './draw'
 import { Settings } from './types'
 
-let requestId: NodeJS.Timeout | null = null
+let requestId: number | null = null
 
 export function run(canvas: HTMLCanvasElement, settings: Settings) {
   if (requestId !== null) {
-    clearTimeout(requestId)
+    cancelAnimationFrame(requestId)
   }
 
   canvas.width = settings.width * settings.size
@@ -21,7 +21,7 @@ export function run(canvas: HTMLCanvasElement, settings: Settings) {
     currentCells[x] = []
     nextCells[x] = []
     for (let y = 0; y < settings.height; y++) {
-      currentCells[x][y] = Math.random() > 0.5
+      currentCells[x][y] = Math.random() > 0.7
       nextCells[x][y] = false
     }
   }
@@ -39,7 +39,7 @@ export function run(canvas: HTMLCanvasElement, settings: Settings) {
         nextCells[x][y] = false
       }
     }
-    requestId = setTimeout(() => update(ctx), 100)
+    requestId = requestAnimationFrame(() => update(ctx))
   }
 
   update(ctx)
