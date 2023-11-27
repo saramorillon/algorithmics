@@ -20,8 +20,8 @@ export function moveCloser(boid1: Boid, boids: Boid[], settings: Settings) {
   let n = 0
   for (const boid2 of boids) {
     if (boid2 !== boid1 && distance(boid1.x, boid1.y, boid2.x, boid2.y) < settings.visibleDistance) {
-      x += boid1.x
-      y += boid1.y
+      x += boid2.x
+      y += boid2.y
       n++
     }
   }
