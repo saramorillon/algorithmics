@@ -1,13 +1,12 @@
+import { createRunner } from '../../utils/runner'
 import { getNextState } from './behaviour'
 import { drawCell } from './draw'
 import { Settings } from './types'
 
-let requestId: number | null = null
+const runner = createRunner('frame')
 
 export function run(canvas: HTMLCanvasElement, settings: Settings) {
-  if (requestId !== null) {
-    cancelAnimationFrame(requestId)
-  }
+  runner.cancelFrame()
 
   canvas.width = settings.width * settings.size
   canvas.height = settings.height * settings.size
@@ -39,7 +38,7 @@ export function run(canvas: HTMLCanvasElement, settings: Settings) {
         nextCells[x][y] = false
       }
     }
-    requestId = requestAnimationFrame(() => update(ctx))
+    runner.requestFrame(() => update(ctx))
   }
 
   update(ctx)

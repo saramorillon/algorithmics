@@ -1,14 +1,13 @@
 import { rand } from '../../utils/math'
+import { createRunner } from '../../utils/runner'
 import { adaptSpeed, alignWith, moveAway, moveCloser, updatePosition } from './behaviour'
 import { clean, drawBoid } from './draw'
 import { Boid, Settings } from './types'
 
-let requestId: number | null = null
+const runner = createRunner('frame')
 
 export function run(canvas: HTMLCanvasElement, settings: Settings) {
-  if (requestId !== null) {
-    cancelAnimationFrame(requestId)
-  }
+  runner.cancelFrame()
 
   canvas.width = settings.width
   canvas.height = settings.height
@@ -30,7 +29,7 @@ export function run(canvas: HTMLCanvasElement, settings: Settings) {
       updatePosition(boid, settings)
       drawBoid(ctx, boid)
     }
-    requestId = requestAnimationFrame(() => update(ctx))
+    runner.requestFrame(() => update(ctx))
   }
 
   update(ctx)

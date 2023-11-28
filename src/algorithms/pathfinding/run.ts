@@ -1,15 +1,14 @@
 import { randInt } from '../../utils/math'
 import { getRandomCell } from '../../utils/plan'
+import { createRunner } from '../../utils/runner'
 import { getPath } from './behaviour'
 import { colors, drawCell } from './draw'
 import { Cell, Settings } from './types'
 
-let requestId: NodeJS.Timeout | null = null
+const runner = createRunner('timeout', 50)
 
 export function run(canvas: HTMLCanvasElement, settings: Settings) {
-  if (requestId !== null) {
-    clearTimeout(requestId)
-  }
+  runner.cancelFrame()
 
   canvas.width = settings.width * settings.size
   canvas.height = settings.height * settings.size
@@ -48,7 +47,7 @@ export function run(canvas: HTMLCanvasElement, settings: Settings) {
       drawCell(ctx, node, colors.path, settings)
     }
 
-    requestId = setTimeout(() => update(ctx), 50)
+    runner.requestFrame(() => update(ctx))
     node = node.parent
   }
 
