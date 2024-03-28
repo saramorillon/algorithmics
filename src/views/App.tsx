@@ -1,4 +1,5 @@
 import { HashRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
+import { AntColony } from './pages/AntColony'
 import { Boids } from './pages/Boids'
 import { CityGenerator } from './pages/CityGenerator'
 import { GameOfLife } from './pages/GameOfLife'
@@ -13,6 +14,7 @@ export function App(): JSX.Element | null {
           <Link to="/boids">Boids</Link>
           <Link to="/game-of-life">Game of life</Link>
           <Link to="/pathfinding">Pathfinding</Link>
+          <Link to="/ant-colony">Ant colony</Link>
           <Link to="/city-generator">City generator</Link>
         </nav>
         <main>
@@ -20,6 +22,7 @@ export function App(): JSX.Element | null {
             <Route path="/boids" element={<Boids />} />
             <Route path="/game-of-life" element={<GameOfLife />} />
             <Route path="/pathfinding" element={<Pathfinding />} />
+            <Route path="/ant-colony" element={<AntColony />} />
             <Route path="/city-generator" element={<CityGenerator />} />
             <Route path="*" element={<Navigate to="/boids" />} />
           </Routes>

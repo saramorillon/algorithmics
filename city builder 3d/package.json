@@ -1,0 +1,11 @@
+{
+  "name": "city_builder_3d",
+  "packageManager": "yarn@4.0.0",
+  "dependencies": {
+    "three": "^0.158.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.158.1",
+    "typescript": "^5.2.2"
+  }
+}
